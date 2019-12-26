@@ -2,6 +2,7 @@ import time
 import csp
 import search
 import copy
+import sys
 
 # Definition of the problem
 class Kakuro(csp.CSP):
@@ -120,8 +121,9 @@ class Kakuro(csp.CSP):
         lis = []
         for var in con:
             #exclude already A or B because they will change
-            if (var in self.currAssignments) and not (var == A or var == B):
-                lis.append(self.currAssignments[var])            
+            if (var in self.currAssignments):
+                if not (var == A or var == B):
+                    lis.append(self.currAssignments[var])            
         return lis
 
             
@@ -162,21 +164,7 @@ class Kakuro(csp.CSP):
                 return True
             else:
                 return False  
-        
-        # (ai, aj) = self.find(A)
-        # preva = self.puzzleVals[ai][aj]
-        # self.puzzleVals[ai][aj] = a
 
-        # (bi, bj) = self.find(B)
-        # prevb = self.puzzleVals[bi][bj]
-        # self.puzzleVals[bi][bj] = b
-        # # self.print()
-        # for con in cons:
-        #     if (sum(self.varsToVals(self.conArrays[con])) !=  self.getSumCon(con)  ):
-        #         self.puzzleVals[ai][aj] = preva
-        #         self.puzzleVals[bi][bj] = prevb   
-        #         return False
-        # return True
 
     def display(self, assignment=None):
         for i, line in enumerate(self.puzzle):
@@ -212,8 +200,26 @@ if __name__ == "__main__":
 
     #kakuro[1,2,3,4]
     #[easy, easy, hard, very hard]
-    kakuro = csp.kakuro1
 
+    kakuroProblemNum = 0
+    kakuro = csp.kakuro1
+    try:
+        kakuroProblemNum = int(sys.argv[-1].split("kakuro")[-1])
+    except:
+        print("Wrong input \nrun simple kakuro1")
+    
+    if kakuroProblemNum == 1:
+        kakuro = csp.kakuro1
+    elif kakuroProblemNum == 2:
+        kakuro = csp.kakuro2
+    elif kakuroProblemNum == 3:
+        kakuro = csp.kakuro3
+    elif kakuroProblemNum == 4:
+        kakuro = csp.kakuro4
+    else:
+        kakuro = csp.kakuro1
+
+    
     ############### Backtracking ###############
     problem = Kakuro(kakuro)
     start = time.time()
