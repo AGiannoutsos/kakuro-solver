@@ -26,6 +26,6 @@ There are 3 binary constraints that the program tries to satisfy.
 - MAC + MRV
 
 
-#### Results
+### Results
 
-
+![](results.jpg)
